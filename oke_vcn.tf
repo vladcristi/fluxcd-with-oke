@@ -2,7 +2,7 @@ resource "oci_core_vcn" "oke_vcn" {
   cidr_block     = var.vcn_cidr
   dns_label      = var.vcn_name
   compartment_id = var.compartment_id
-  display_name   = "${var.vcn_name}-vcn"
+  display_name   = "${var.vcn_name}"
 }
 
 resource "oci_core_nat_gateway" "vcn_ngs" {

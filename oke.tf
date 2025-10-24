@@ -45,7 +45,7 @@ resource "oci_containerengine_node_pool" "node_pool" {
         }
     }
     node_eviction_node_pool_settings {
-        eviction_grace_duration = 60
+        eviction_grace_duration = "PT60M"
     }
 
     node_shape_config {

@@ -25,7 +25,8 @@ variableGroups:
     variables:
       - compartment_id
       - cluster_name
-      - kubernetes_version
+      - cluster_kubernetes_version
+      - node_pool_size
 
   - title: "Access to the Kubernetes cluster"
     visible: true
@@ -63,27 +64,14 @@ variables:
     allowMultiple: false
     required: true
 
+  node_pool_size:
+    type: string
+    default: 1
+    required: true
+
   ssh_public_key:
     title: SSH public key
     description: Public SSH key to be included in the ~/.ssh/authorized_keys file for the bastion, operator and worker nodes.
     # renders variable as an SSH key control
     type: oci:core:ssh:publickey
     required: true
-
-outputs:
-  bastion:
-    title: Bastion public IP
-    description: The bastion host public IP address.
-    type: copyableString
-
-  ssh_to_bastion:
-    title: Command to connect to operator host.
-    description: The ssh command to connect to the operator host via the bastion.
-    sensitive: true
-    type: copyableString
-  
-outputGroups:
-- title: "Access details"
-  outputs:
-    - ${bastion}
-    - ${ssh_to_bastion}
