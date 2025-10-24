@@ -37,11 +37,11 @@ The repository is structured as a Terraform project that creates and OKE cluster
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/dranicu/openkruise-on-oke.git
-    cd openkruise-on-oke
+    git clone https://github.com/vladcristi/fluxcd-with-oke
+    cd fluxcd-with-oke
     ```
 
-2.  **Create a `terraform.auto.tfvars` file and add the following variables:**
+2.  **Add in `terraform.auto.tfvars` file the following variables:**
     ```tfvars
     tenancy_ocid     = "ocid1.tenancy.oc1..your_tenancy_ocid"
     user_ocid        = "ocid1.user.oc1..your_user_ocid"
