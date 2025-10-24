@@ -1,0 +1,89 @@
+title: FluxCD deployment on OKE
+description: Terraform Stack for OKE and FluxCD 
+informationalText: Terraform Stack for OKE and FluxCD
+schemaVersion: 1.1.0
+version: "20190304"
+
+# URL of Logo Icon used on Application Information tab. Logo must be 130x130 pixels.
+# (Optional)
+logoUrl: https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/laivzo5VNcM9uZf9O6ftZb4-QTPOcszBFwtfu7AGOtbINpfSDKqbJAnSNIRDjtX6/n/orasenatdpltintegration03/b/default-bucket/o/oracle_icon.jpg
+
+
+locale: "en"
+variableGroups:
+  - title: "Hidden RMS variables"
+    visible: false
+    variables:
+      - tenancy_ocid
+      - compartment_ocid
+      - region
+      - user_ocid
+      - current_user_ocid
+
+  - title: "General configuration"
+    visible: true
+    variables:
+      - compartment_id
+      - cluster_name
+      - kubernetes_version
+
+  - title: "Access to the Kubernetes cluster"
+    visible: true
+    variables:
+      - ssh_public_key
+
+variables:
+
+  compartment_id:
+    type: oci:identity:compartment:id
+    title: Deployment compartment target
+    description: Please select the compartment where the resources will be created
+    required: true
+
+  cluster_name:
+    type: string
+    minLength: 3
+    maxLength: 40
+    pattern: "^[a-zA-Z0-9][a-zA-Z0-9-]*?[a-zA-Z0-9]$"
+    title: Cluster Name
+    description: The name of the OKE cluster.
+    default: oke
+    required: true
+
+  cluster_kubernetes_version:
+    type: enum
+    title: Kubernetes version
+    description: The version of the Kubernetes cluster.
+    default: v1.34.1
+    enum:
+      - v1.34.1
+      - v1.34.0
+      - v1.33.1
+      - v1.33.0
+    allowMultiple: false
+    required: true
+
+  ssh_public_key:
+    title: SSH public key
+    description: Public SSH key to be included in the ~/.ssh/authorized_keys file for the bastion, operator and worker nodes.
+    # renders variable as an SSH key control
+    type: oci:core:ssh:publickey
+    required: true
+
+outputs:
+  bastion:
+    title: Bastion public IP
+    description: The bastion host public IP address.
+    type: copyableString
+
+  ssh_to_bastion:
+    title: Command to connect to operator host.
+    description: The ssh command to connect to the operator host via the bastion.
+    sensitive: true
+    type: copyableString
+  
+outputGroups:
+- title: "Access details"
+  outputs:
+    - ${bastion}
+    - ${ssh_to_bastion}
