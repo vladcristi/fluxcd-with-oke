@@ -18,7 +18,7 @@ variable "compartment_id" {
 variable "vcn_name" {
   description = "VCN name"
   nullable    = false
-  default     = "oke-vcn"
+  default     = "okevcn"
 }
 
 variable "kube_client_cidr" {
